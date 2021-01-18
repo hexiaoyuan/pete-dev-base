@@ -11,7 +11,7 @@ pete-dev-base 是个人开发用的基础 docker-image, 方便快速搭建开发
 ## 编译发布
 ```
 docker build -f Dockerfile -t hexiaoyuan/pete-dev-base:latest .
-docker tag hexiaoyuan/pete-dev-base:latest hexiaoyuan/pete-dev-base:v20210118
+docker tag hexiaoyuan/pete-dev-base:latest hexiaoyuan/pete-dev-base:v20210119
 docker push hexiaoyuan/pete-dev-base
 ```
 
@@ -23,7 +23,7 @@ docker run -d --init --privileged -p 50990:22 --name pete02 hexiaoyuan/pete-dev-
 
 ## 进入
 ```
-docker exec -it pete02 bash
+docker exec -it pete02 zsh
 
 ##进入后先把秘密改一下(ubuntu/ubuntu):
 ubuntu@886ec2d5325f:~$ passwd
@@ -47,3 +47,32 @@ $ exit
 ssh ubuntu@127.0.0.1 -p 50990
 ```
 
+
+## 国内修改apt源
+用你熟悉的编辑器打开 /etc/apt/sources.list
+
+```
+deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+```
+
+## 使用 volume 来保存数据(建议)
+```
+docker volume create vol_pete02_home
+docker volume inspect vol_pete02_home
+
+docker run -d --init --privileged -p 50990:22 --name pete02 --hostname pete02 \
+	--mount source=vol_pete02_home,target=/home  \
+	hexiaoyuan/pete-dev-base:v20210119
+
+docker exec -it pete02 zsh
+
+```

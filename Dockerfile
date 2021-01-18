@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get -qq update && apt-get -qq -y dist-upgrade  && apt-get -y -qq --no-install-recommends install \
     sudo git vim python3 build-essential openssh-server \
     curl wget ca-certificates openssl lsb-release gnupg \
-    bsdmainutils lsof iputils-ping iproute2 htop \
+    bsdmainutils lsof iputils-ping iproute2 htop less \
     tzdata locales tmux zsh
 #RUN apt-get -qq clean && rm -rf /var/lib/apt/lists/*
 RUN locale-gen en_US.UTF-8
