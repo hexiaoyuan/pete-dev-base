@@ -30,7 +30,7 @@ RUN apt-get -qq update && apt-get -qq -y dist-upgrade  \
     && apt-get -y -qq --no-install-recommends --no-install-suggests install \
         supervisor openssh-server python3 build-essential vim git lsb-release \
     && apt-get -y -qq --no-install-recommends --no-install-suggests install \
-        iputils-ping iproute2 htop elinks less tmux zsh
+        zsh iputils-ping iproute2 htop elinks less tmux lsof
 #
 # clean if you want ...
 RUN apt-get -qq clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

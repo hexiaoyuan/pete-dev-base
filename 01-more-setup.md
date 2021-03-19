@@ -74,8 +74,7 @@ $ go env
 NODEJS_VERSION=v14.16.0
 wget https://nodejs.org/dist/$NODEJS_VERSION/node-$NODEJS_VERSION-linux-x64.tar.xz
 tar -C ~/.local -xJvf node-$NODEJS_VERSION-linux-x64.tar.xz
-cd ~/.local;
-rm -f nodejs; ln -s node-$NODEJS_VERSION-linux-x64 nodejs; cd -;
+cd ~/.local; rm -f nodejs; ln -s node-$NODEJS_VERSION-linux-x64 nodejs; cd -;
 vi $HOME/.profile
 
 ```bash
