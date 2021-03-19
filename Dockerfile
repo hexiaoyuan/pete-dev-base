@@ -81,9 +81,5 @@ COPY --chown=ubuntu:ubuntu auto.sh /home/ubuntu/.local/auto.sh
 #
 USER root
 EXPOSE 22
-# Setup default command and/or parameters.
-#CMD ["sleep", "infinity"]
-#CMD ["/usr/bin/sudo", "/usr/sbin/sshd", "-D", "-o", "ListenAddress=0.0.0.0"]
-#CMD ["/usr/bin/supervisord"]
 CMD ["/docker-entrypoint.sh"]
 

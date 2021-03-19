@@ -33,15 +33,16 @@ sudo apt dist-upgrade
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
-### 安装docker
+### 安装docker (考虑用containerd.io替换)
 
+根据官方网站文档安装最新版本：
 sudo apt-get remove docker docker-engine docker.io containerd runc
 sudo apt-get update
 sudo apt-get install apt-transport-https ca-certificates curl gnupg
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo apt-get install docker-ce docker-ce-cli containerd.io --no-install-recommends
 sudo usermod -aG docker ubuntu
 
 ### 手工启动docker服务
@@ -50,6 +51,41 @@ sudo /etc/init.d/docker start
 
 如果想重启docker是自动启动docker,可以把上面行加到 ~/.local/auto.sh 文件中去.
 建议需要时开启即可，用完关掉省点资源.
+
+### 安装运行rootless模式的docker服务
+
+参考：
+https://www.docker.com/blog/experimenting-with-rootless-docker/
+
+sudo apt update && apt install -y uidmap
+sudo sh -c 'echo "ubuntu:100000:65536" >> /etc/subuid; echo "ubuntu:100000:65536" >> /etc/subgid'
+
+$ curl -fsSL https://get.docker.com/rootless -o get-docker.sh
+$ SKIP_IPTABLES=1 sh get-docker.sh
+
+$ vi ~/.zshrc
+
+```sh
+# my local bin path:
+export export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+# my docker-rootless setup:
+export XDG_RUNTIME_DIR=/home/ubuntu/.docker/run
+export DOCKER_HOST=unix:///home/ubuntu/.docker/run/docker.sock
+```
+
+由于没有systemd因此需要手动启动:
+
+dockerd-rootless.sh --iptables=false
+
+可能没权限，注意 docker run 时需要参数给权限：
+--security-opt seccomp=unconfined --security-opt apparmor=unconfined
+貌似不够，用 --privileged 吧。
+
+重新进入docker后继续：
+dockerd-rootless-setuptool.sh --skip-iptables check   # 检查
+dockerd-rootless-setuptool.sh --skip-iptables install # 安装
+
+dockerd-rootless.sh --iptables=false  # 运行启动
 
 ### 安装aws工具
 
@@ -84,3 +120,9 @@ export PATH=$PATH:$HOME/.local/nodejs/bin
 $ node -v
 $ npm version
 $ npx -v
+
+直接命令行运行:
+$ npm install -g yarn
+
+会安装到 /home/ubuntu/.local/nodejs/bin/yarn 本地目录，
+下次升级nodejs后记得重新安装即可。
