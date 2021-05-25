@@ -11,8 +11,9 @@ pete-dev-base 是个人开发用的基础 docker-image, 方便快速搭建开发
 ## 编译发布
 
 ```sh
+touch authorized_keys
 docker build -f Dockerfile -t hexiaoyuan/pete-dev-base:latest .
-docker tag hexiaoyuan/pete-dev-base:latest hexiaoyuan/pete-dev-base:v20210319
+docker tag hexiaoyuan/pete-dev-base:latest hexiaoyuan/pete-dev-base:v20210525
 docker push hexiaoyuan/pete-dev-base -a
 ```
 
@@ -81,7 +82,7 @@ docker volume inspect vol_pete02_home
 docker run -d --init \
   -p 60102:22 \
   --mount source=vol_pete02_home,target=/home \
-  --name pete02 --hostname pete02 hexiaoyuan/pete-dev-base:v20210319
+  --name pete02 --hostname pete02 hexiaoyuan/pete-dev-base:v20210525
 
 docker exec -it pete02 zsh
 

@@ -28,9 +28,10 @@ RUN apt-get -qq update && apt-get -qq -y dist-upgrade  \
     && apt-get -y -qq --no-install-recommends --no-install-suggests install \
         apt-utils sudo ca-certificates apt-transport-https gnupg curl wget \
     && apt-get -y -qq --no-install-recommends --no-install-suggests install \
-        supervisor openssh-server python3 build-essential vim git lsb-release \
+        supervisor openssh-server python3 tmux lsof vim lsb-release \
     && apt-get -y -qq --no-install-recommends --no-install-suggests install \
-        zsh iputils-ping iproute2 htop elinks less tmux lsof
+        zsh iputils-ping iproute2 htop elinks less \
+        build-essential git clang libclang-dev pkg-config libssl-dev
 #
 # clean if you want ...
 RUN apt-get -qq clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -70,7 +71,7 @@ WORKDIR /home/ubuntu
 #
 # Generate and configure user keys.
 USER ubuntu
-RUN ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519
+#RUN ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519
 COPY --chown=ubuntu:ubuntu "./authorized_keys" /home/ubuntu/.ssh/authorized_keys
 # Install oh-my-zsh
 #RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended

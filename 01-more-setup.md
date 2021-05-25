@@ -68,11 +68,11 @@ aws s3 ls
 
 ### 安装golang环境 (选择手动安装)
 
-wget https://golang.org/dl/go1.16.linux-amd64.tar.gz
-rm -rf ~/.local/go && tar -C ~/.local/ -xzf go1.16.linux-amd64.tar.gz
+wget https://golang.org/dl/go1.16.4.linux-amd64.tar.gz
+rm -rf ~/.local/go && tar -C ~/.local/ -xzf go1.16.4.linux-amd64.tar.gz
 vi $HOME/.profile
 
-```bash
+```sh
 export PATH=$PATH:$HOME/.local/go/bin:$HOME/go/bin
 ```
 
@@ -81,13 +81,13 @@ $ go env
 
 ### 安装nodejs环境(选择手动安装)
 
-NODEJS_VERSION=v14.16.0
+NODEJS_VERSION=v14.17.0
 wget https://nodejs.org/dist/$NODEJS_VERSION/node-$NODEJS_VERSION-linux-x64.tar.xz
 tar -C ~/.local -xJvf node-$NODEJS_VERSION-linux-x64.tar.xz
 cd ~/.local; rm -f nodejs; ln -s node-$NODEJS_VERSION-linux-x64 nodejs; cd -;
 vi $HOME/.profile
 
-```bash
+```sh
 export PATH=$PATH:$HOME/.local/nodejs/bin
 ```
 
