@@ -26,11 +26,11 @@ RUN sed -i 's#archive.ubuntu.com#mirrors.aliyun.com#' /etc/apt/sources.list && s
 # Install required tools ...
 RUN apt-get -qq update && apt-get -qq -y dist-upgrade  \
     && apt-get -y -qq --no-install-recommends --no-install-suggests install \
-        apt-utils sudo ca-certificates apt-transport-https gnupg curl wget \
+        apt-utils sudo ca-certificates apt-transport-https gnupg curl wget jq \
     && apt-get -y -qq --no-install-recommends --no-install-suggests install \
-        supervisor openssh-server python3 tmux lsof vim lsb-release \
+        supervisor openssh-server python3 python3-pip tmux lsof vim lsb-release \
     && apt-get -y -qq --no-install-recommends --no-install-suggests install \
-        zsh iputils-ping iproute2 htop elinks less \
+        zsh bc iputils-ping iproute2 htop elinks less \
         build-essential git clang libclang-dev pkg-config libssl-dev
 #
 # clean if you want ...
