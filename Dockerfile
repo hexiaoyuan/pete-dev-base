@@ -30,9 +30,11 @@ RUN apt-get -qq update && apt-get -qq -y dist-upgrade  \
     && apt-get -y -qq --no-install-recommends --no-install-suggests install \
         supervisor openssh-server python3 python3-pip tmux lsof vim lsb-release \
     && apt-get -y -qq --no-install-recommends --no-install-suggests install \
-        zsh bc iputils-ping iproute2 htop elinks less tzdata locales \
-        build-essential git patch clang libclang-dev pkg-config libssl-dev 
-#
+        zsh bc iputils-ping iproute2 htop elinks less zip unzip \
+        build-essential git patch clang libclang-dev pkg-config libssl-dev cmake
+##
+## 暂时不需要 tzdata locales 这两个包了;
+##
 # clean if you want ...
 RUN apt-get -qq clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 #
